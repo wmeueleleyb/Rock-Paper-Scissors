@@ -31,7 +31,7 @@ while GameEnd == False:
     elif comp_move == 'Scissors' and move == 'B': print('PC wins')
     else: print('It\'s a draw')
     
-    print("Would you like to play again? (y/n)",end = '')
+    print("Would you like to play again? (y/n): ",end = '')
     Continue = str(input())
     if Continue == "y": GameEnd = False
     else: GameEnd = True
