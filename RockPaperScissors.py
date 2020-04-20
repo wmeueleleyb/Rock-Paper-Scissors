@@ -1,38 +1,78 @@
-import random
-import os
+import random, os, time
 
-Moves = ['Rock','Paper','Scissors']
-P_Moves = {'A': 'Rock', 'B': 'Paper', 'C': 'Scissors'}
-GameEnd = False
+P_hand = {'rock':"---'   ____)     |       (_____)   |       (_____)   |       (____)    | ---.__(___)     |",
+         'paper':"---'   ____)     |      _________) |       _________)|       ________) |---.__________)   ",
+      'scissors':"---'   ____)     |      _________) |       _________)|      (____)     |---.__(___)       "}
 
-while GameEnd == False:
+CPU_hand = {'rock':"  (____   '---   |(_____)          |(_____)          | (____)          |  (___)__.---    ",
+            'paper':"     (____   '---| (_________      |(_________       | (________       |  (__________.--- ",
+         'scissors':"    (____   '--- | (_________      |(_________       |     (____)      |      (___)__.--- "}
+
+move, c_move = 'rock', 'rock'
+GameOver = False
+line = ''
+
+def show_hands():
+    os.system('cls')
+    print('==============================ROCK PAPER SCISSORS==============================')
+    print('')
+    print(line,end = '')
+    print('               '+P_hand[move][0:17]+'                 '+CPU_hand[c_move][0:17])
+    print('               '+P_hand[move][18:35]+'                 '+CPU_hand[c_move][18:35])
+    print('               '+P_hand[move][36:53]+'                 '+CPU_hand[c_move][36:53])
+    print('               '+P_hand[move][54:71]+'                 '+CPU_hand[c_move][54:71])
+    print('               '+P_hand[move][72:-1]+'                 '+CPU_hand[c_move][72:-1])
+    print('')
+
+os.system('color c')
+print('Rock, Paper, Scissors')
+print("___________\nInstructions: Let's play a game of rock, paper, scissors.\nif you're not familiar, the rules are simple.")
+print('ROCK beats SCISSORS | SCISSORS beats PAPER | PAPER beats ROCK.\n')
+print('')
+print('\nTo begin type START')
+print('>',end = '')
+name = input()
+
+while GameOver == False:
+
+    show_hands()
     
-    os.system("cls")
-    print("You are playing against the computer")
-    print("Make your move")
-    print("-------------------------------------")
-    print("[A] Rock \n"
-          "[B] Paper \n"
-          "[C] Scissors")
-    
-    print("Your Move: ", end = '')
-    move = str(input()).upper()
-    comp_move = random.choice(Moves)
+    print('Rock, Paper, or Scissors?')
+    print('>',end = '')
+    p_move = input().lower()
+    if p_move != 'rock' and p_move != 'paper' and p_move != 'scissors':
+        while p_move != 'rock' and p_move != 'paper' and p_move != 'scissors':
+            print('That is not a move please try again')
+            print('>',end = '')
+            p_move = input().lower()
 
-    print('------------------------------------------------')
-    print('Player: ' + P_Moves[move] + '\nPC: ' + comp_move)
-    print('------------------------------------------------')
+    for i in range(6):
+        if i % 2 == 0:
+            line = '\n'
+            show_hands()
+            time.sleep(0.2)
+        else:
+            line = ''
+            show_hands()
+            time.sleep(0.2)
 
-    if comp_move == 'Rock' and move == 'C': print('PC wins')
-    elif comp_move == 'Rock' and move == 'B': print('Player wins')
-    elif comp_move == 'Paper' and move == 'A': print('PC wins')
-    elif comp_move == 'Paper' and move == 'C': print('Player wins')
-    elif comp_move == 'Scissors' and move == 'A': print('Player wins')
-    elif comp_move == 'Scissors' and move == 'B': print('PC wins')
+    move = p_move
+    c_move = random.choice(['rock','paper','scissors'])
+
+    show_hands()
+
+    if c_move == 'rock' and move == 'scissors': print('PC wins')
+    elif c_move == 'rock' and move == 'paper': print('Player wins')
+    elif c_move == 'paper' and move == 'rock': print('PC wins')
+    elif c_move == 'paper' and move == 'scissors': print('Player wins')
+    elif c_move == 'scissors' and move == 'rock': print('Player wins')
+    elif c_move == 'scissors' and move == 'paper': print('PC wins')
     else: print('It\'s a draw')
-    
-    print("Would you like to play again? (y/n): ",end = '')
-    Continue = str(input())
-    if Continue == "y": GameEnd = False
-    else: GameEnd = True
 
+    move, c_move = 'rock', 'rock'
+    
+    print('Would you like to play again? (y/n)')
+    print('>',end = '')
+    Continue = input().lower()
+    if Continue == "y": GameOver = False
+    else: GameOver = True
